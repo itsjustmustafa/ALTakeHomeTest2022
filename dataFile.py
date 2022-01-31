@@ -20,8 +20,8 @@ class DataFile():
     def remove_row(self, index, reset_index = True):
         """
         This function will remove a row at a given index from DataFile._dataframe
-        :param index: either an integer for the index of the row, or a list of integers for multiple indices (integer)
-        :param reset_index: will reset the index of the Pandas Dataframe after all the rows to remove are removed
+        :param index: either an int (single index) , or a list of ints (multiple indices)
+        :param reset_index: boolean (default = True), will reset the index after the rows are removed
         """
         self._dataframe = self._dataframe.drop(index)
         if reset_index:

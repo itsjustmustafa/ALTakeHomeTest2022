@@ -1,7 +1,14 @@
+"""
+The abstract class DataFileIO responsible for handling data sources of DataFiles.
+Can save and load dataframes for DataFiles.
+"""
+
 class DataFileIO:
-    """The file-handling class"""
+    """
+    The file-handling class
+    """
     def __init__(self):
-        pass
+        self.filename = None
     
     def save(self, dataframe):
         """
@@ -12,9 +19,12 @@ class DataFileIO:
         """
         raise NotImplementedError("Abstract class `DataFileIO` has no save() implementation")
     
-    def load(self):
+    def load(self, filename=None):
         """
         Should load the dataframe from a relevant location based on the DataFileIO object.
         Since this is an abstract class, there is no implementation.
         """
-        raise NotImplementedError("Abstract class `DataFileIO` has no load() implementation")
+        raise NotImplementedError("Abstract class `DataFileIO` has no load(filename) implementation")
+    
+    def get_filename(self):
+        raise NotImplementedError("Abstract class `DataFileIO` has no get_filename() implementation")

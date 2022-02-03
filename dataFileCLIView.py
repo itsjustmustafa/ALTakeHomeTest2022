@@ -434,15 +434,17 @@ class DataFileCLIView:
         self._remove_row(True)
 
         self._current_scene = "Search"
-
-    def _remove_row(self, searching=False):
+    
+    def _prompt_row(self, searching=False):
         """
-        Remove a row, given an index of the users choice, from the currently selected DataFile
-
-        :param searching: (default=False) Flag if displaying from Search scene
-        :type searching: boolean
+        Prompts the user to select a row of the DataFile's DataFrame
+        
+        :param searching: (default=False) Flag if using from Search scene
+        :return: list [index of row, row of DataFrame]
+        :rtype: list[int, Pandas DataFrame]
         """
-        index_to_remove = -1
+        
+        index_of_interest = -1
 
         total_rows = len(self._controller.get_current_datafile_dataframe())
         if searching:
@@ -457,26 +459,38 @@ class DataFileCLIView:
             return
 
         index_value_selected = self._prompt_choice(
-            range(total_rows), show_choices=False
+            range(total_rows), choice_msg="Which row are you choosing?", show_choices=False
         )
 
         if searching:
             dataframe_queried = self._controller.get_queried_of_current_datafile(
                 self._current_query
             )
-            index_to_remove = list(dataframe_queried.index)[index_value_selected]
+            index_of_interest = list(dataframe_queried.index)[index_value_selected]
         else:
-            index_to_remove = index_value_selected
+            index_of_interest = index_value_selected
 
-        if index_to_remove < 0:
-            self._send_message("No row selected for removal.", True)
+        if index_of_interest < 0:
+            self._send_message("No row selected.", True)
             return
 
-        row_to_remove = self._controller.get_current_datafile_dataframe().loc[
-            [index_to_remove]
+        row_of_interest = self._controller.get_current_datafile_dataframe().loc[
+            [index_of_interest]
         ]
 
-        row_to_remove = row_to_remove.set_index(pd.Index([index_to_remove + 1]))
+        row_of_interest = row_of_interest.set_index(pd.Index([index_of_interest +1]))
+        
+        return [index_of_interest, row_of_interest]
+
+    def _remove_row(self, searching=False):
+        """
+        Remove a row, given an index of the users choice, from the currently selected DataFile
+
+        :param searching: (default=False) Flag if removing row from Search scene
+        :type searching: boolean
+        """
+        
+        index_to_remove, row_to_remove = self._prompt_row(searching)
 
         self._send_message("Row to remove:")
         self._send_message(row_to_remove)
@@ -512,46 +526,13 @@ class DataFileCLIView:
         by row and column of the users choice.
         This is for both coming from the Querying and Search scene
 
-        :param searching: (default=False) Flag if displaying from Search scene
+        :param searching: (default=False) Flag if changing row in Search scene
         :type searching: boolean
         """
-        index_to_change = -1
+        
+        index_to_change, row_to_change = self._prompt_row(searching)
 
-        total_rows = len(self._controller.get_current_datafile_dataframe())
-        if searching:
-            total_rows = len(
-                self._controller.get_queried_of_current_datafile(self._current_query)
-            )
-
-        if total_rows == 0:
-            if searching:
-                self._send_message("Current DataFile search is empty.", True)
-            else:
-                self._send_message("Current DataFile is empty.", True)
-            return
-
-        index_value_selected = self._prompt_choice(
-            range(total_rows),
-            choice_msg="Which row are you changing?",
-            show_choices=False,
-        )
-        if searching:
-            dataframe_queried = self._controller.get_queried_of_current_datafile(
-                self._current_query
-            )
-            index_to_change = list(dataframe_queried.index)[index_value_selected]
-        else:
-            index_to_change = index_value_selected
-
-        if index_to_change < 0:
-            self._send_message("No row selected to change.", is_prompt=True)
-            return
-
-        row_to_change = self._controller.get_current_datafile_dataframe().loc[
-            [index_to_change]
-        ]
-
-        row_to_change = row_to_change.set_index(pd.Index([index_value_selected + 1]))
+        row_to_change = row_to_change.set_index(pd.Index([index_to_change + 1]))
 
         self._send_message("Row to change:")
         self._send_message(row_to_change)
@@ -736,7 +717,7 @@ class DataFileCLIView:
         valid_term = False
         entered_term = ""
         while not valid_term:
-            entered_term = self._ask_user("Search term: ")
+            entered_term = self._ask_user("What string are you searching? ")
             if entered_term == "":
                 self._send_message("Please enter a non-empty search term")
             else:

@@ -23,8 +23,21 @@ class DataFileIO:
         """
         Should load the dataframe from a relevant location based on the DataFileIO object.
         Since this is an abstract class, there is no implementation.
+        :param filename: The filename of the file to load
+        :type filename: string
         """
         raise NotImplementedError("Abstract class `DataFileIO` has no load(filename) implementation")
     
     def get_filename(self):
-        raise NotImplementedError("Abstract class `DataFileIO` has no get_filename() implementation")
+        """
+        
+        """
+        return self._filename
+    
+    def __str__(self):
+        """
+        Should return whatever self.get_filename() returns
+        :return: `self.get_filename()`
+        :rtype: string       
+        """
+        return self.get_filename()

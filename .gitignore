@@ -130,3 +130,4 @@ dmypy.json
 
 # Any data files
 *.csv
+!demos/**

@@ -25,20 +25,17 @@ class DataFileIOCSV(DataFileIO):
         :return: (optional) Pandas DataFrame if `self.filename` exists, otherwise None
         """
         if not exists(self._filename):
-            raise FileNotFoundError("Could not find {}".format(self.filename))
+            raise FileNotFoundError("Could not find {}".format(self._filename))
             
         if splitext(self._filename)[1] != ".csv":
-            raise InvalidFileType("Input file {} is not a csv.".format(filename))
+            raise InvalidFileType("Input file {} is not a csv.".format(self._filename))
             
         
-        return pd.read_csv(self._filename)
-        
+        return pd.read_csv(self._filename).astype(str)
+
     def save(self, dataframe):
         """
         Saves a Pandas Dataframe to the csv file `self.filename`
         :param dataframe: a Pandas Dataframe
         """
         dataframe.to_csv(self._filename, index=False)
-    
-    def get_filename(self):
-        return self._filename

@@ -14,6 +14,7 @@ class DataFileIO:
         """
         Should save a Pandas Dataframe to a relevant location based on the DataFileIO object.
         Since this is an abstract class, there is no implementation.
+        
         :param dataframe: The Pandas DataFrame to save
         :type dataframe: Pandas DataFrame
         """
@@ -23,6 +24,7 @@ class DataFileIO:
         """
         Should load the dataframe from a relevant location based on the DataFileIO object.
         Since this is an abstract class, there is no implementation.
+        
         :param filename: The filename of the file to load
         :type filename: string
         """
@@ -30,13 +32,17 @@ class DataFileIO:
     
     def get_filename(self):
         """
+        Gets the filename of the DataFileIO
         
+        :return: filename
+        :rtype: string
         """
         return self._filename
     
     def __str__(self):
         """
         Should return whatever self.get_filename() returns
+        
         :return: `self.get_filename()`
         :rtype: string       
         """

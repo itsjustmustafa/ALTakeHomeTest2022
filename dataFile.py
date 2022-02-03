@@ -13,6 +13,8 @@ class DataFile():
 
     def __init__(self, IO_handler):
         """
+        Create a DataFile object.
+        
         :param IO_handler: The file handler that takes care of saving and loading
         :type IO_handler: DataFileIO
         """
@@ -23,8 +25,9 @@ class DataFile():
     def from_csv(filename):
         """
         Returns a DataFile using a csv file as a source.
-        Creates a DataFileIOCSV as an IO_handler for the DataFile.
+        Creates a DataFileIOCSV as an IO_handler for the DataFile.    
         (based on Pandas' from_csv method)
+        
         :param filename: The filename for the csv data
         :type filename: string
         :return: DataFile with datasource as the csv file `filename`
@@ -35,28 +38,33 @@ class DataFile():
 
     def get(self):
         """
-        This function will return a deep copy of `_dataframe`.
+        Get a deep copy of `_dataframe`.
+        
         :return: A deep copy of the current dataframe
         :rtype: Pandas DataFrame      
         """
         return self._dataframe.copy()
     
     def get_filename(self):
+        """
+        Get filename of DataFile from `_IO_handler`
+        
+        :return: filename
+        :rtype: string
+        """
         return self._IO_handler.get_filename()
     
     def save(self):
         """
-        This function will save `_dataframe` to the 
+        Save `_dataframe` to its source
         """
         self._IO_handler.save(self.get())
 
-    # Querying Methods
-    # These querying methods are sourced from the querying/ directory.
-    
     
     def add_row(self, row):
         """
         Adds row `row` to `_dataframe`.
+        
         :param row: Either a list of values or a dict representing the key/values for the new row
         :type row: dict or list
         """
@@ -65,7 +73,8 @@ class DataFile():
     
     def remove_row(self, index, reset_index=True):
         """
-        This function will remove a row at a given index from `_dataframe`.
+        Remove a row (or a multiple rows) at a given index (or indices) from `_dataframe`.
+        
         :param index: either a single index, or a list of indices
         :param reset_index: (default = True), will reset the index after the rows are removed
         :type index: int or list of ints  
@@ -80,10 +89,10 @@ class DataFile():
         """
         Searches each row of `_dataframe` for `term` in the column `key`.
         Exact search if `exact`, otherwise substring search.
+        
         :param term: The string to search for in the `_dataframe`
         :param key: The column in `_dataframe` in which to search for `term`
-        :param exact: (default True) If True, only return rows where values in `key` are exactly
-                      `term`, if False, return rows where `term` is a substring of values in `key`
+        :param exact: (default True) If True, only return rows where values in `key` are exactly `term`, if False, return rows where `term` is a substring of values in `key`
         :param search_df: (defalt None) The dataframe to search within, if None, defaults to self._dataframe              
         :type term: string
         :type key: string
@@ -110,10 +119,10 @@ class DataFile():
     def search_multi(self, search_args, current_result=None):
         """
         Executes multiple search queries on the dataframe using recursion.
-        :param search_args:
-        :param current_result: (default=None) The current search result to continue searching,
-                                if None then defaults to `_dataframe`
-        :type search_args: List of [term, key, exact] values, which are string, string, boolean respectively
+        
+        :param search_args: List of search arguments (each elememnt is [term, key, exact])
+        :param current_result: (default=None) The current search result to continue searching, if None then defaults to `_dataframe`
+        :type search_args: List (each element is [string, string, boolean])
         :type current_result: None or Pandas DataFrame
         :return: Final result of the multiple searches
         :rtype: Pandas DataFrame
@@ -137,6 +146,7 @@ class DataFile():
     def change_row(self, row, index):
         """
         Changes the row at position `index` to `row`
+        
         :param row: The replacement row to be placed at `index`
         :param index: The index of the row to be changed
         :type row: list or dict
@@ -147,3 +157,11 @@ class DataFile():
         else:
             raise IndexError("Index {} out of bounds for DataFrame of length {}".format(index, len(self._dataframe)))
     
+    def __len__(self):
+        """
+        Implementation of length, based on length of `_dataframe`
+        
+        :return: length of `_dataframe`
+        :rtype: int
+        """
+        return len(self._dataframe)

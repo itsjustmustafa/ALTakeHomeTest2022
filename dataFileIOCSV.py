@@ -22,7 +22,9 @@ class DataFileIOCSV(DataFileIO):
     def load(self):
         """
         Returns a Pandas DataFrame from the csv file `self.filename`
-        :return: (optional) Pandas DataFrame if `self.filename` exists, otherwise None
+        
+        :return: (Optional) Pandas DataFrame from `filename` if `self.filename` exists, otherwise None
+        :rtype: (Optional) Pandas DataFrame
         """
         if not exists(self._filename):
             raise FileNotFoundError("Could not find {}".format(self._filename))
@@ -36,6 +38,7 @@ class DataFileIOCSV(DataFileIO):
     def save(self, dataframe):
         """
         Saves a Pandas Dataframe to the csv file `self.filename`
+        
         :param dataframe: a Pandas Dataframe
         """
         dataframe.to_csv(self._filename, index=False)

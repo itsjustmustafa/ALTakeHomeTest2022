@@ -128,7 +128,7 @@ class DataFileCLIView:
                 len(choices)
             )
 
-        if choice_msg  ==  None:
+        if choice_msg == None:
             choice_msg = "Choose among the following:"
 
         if show_choices:
@@ -735,9 +735,7 @@ class DataFileCLIView:
             index_of_column_to_change
         ]
 
-        is_exact = self._prompt_y_n(
-            "Exact search? (otherwise substring search)"
-        )
+        is_exact = self._prompt_y_n("Exact search? (otherwise substring search)")
 
         self._current_query.append([entered_term, entered_column, is_exact])
 

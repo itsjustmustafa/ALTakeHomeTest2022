@@ -86,7 +86,7 @@ class DataFileCLIView:
         valid_choice = False
         response = None
         while not valid_choice:
-            user_response = self._ask_user(message)
+            user_response = self._ask_user(message + " (y/n): ")
 
             if user_response.lower() in ["y", "yes"]:
                 response = True
@@ -128,7 +128,7 @@ class DataFileCLIView:
                 len(choices)
             )
 
-        if choice_msg == None:
+        if choice_msg  ==  None:
             choice_msg = "Choose among the following:"
 
         if show_choices:
@@ -189,7 +189,7 @@ class DataFileCLIView:
         Scene key: Exit
         """
 
-        confirm_exit = self._prompt_y_n("Are you sure you want to exit? (y/n): ")
+        confirm_exit = self._prompt_y_n("Are you sure you want to exit?")
 
         if not confirm_exit:
             self._current_scene = "Selection"
@@ -199,7 +199,7 @@ class DataFileCLIView:
         datafiles_to_save = []
         for datafile_index in range(len(datafile_filenames)):
             is_saving_this_datafile = self._prompt_y_n(
-                "Unsaved DataFile:\n\t{}\nSave? (y/n): ".format(
+                "Unsaved DataFile:\n\t{}\nSave?".format(
                     datafile_filenames[datafile_index]
                 )
             )
@@ -328,9 +328,9 @@ class DataFileCLIView:
         nominated_datafile = self._controller.get_datafile_names()[remove_index]
 
         self._send_message("Nominated file:\n\t{}".format(nominated_datafile))
-        user_confirm = self._prompt_y_n("Are you sure? (y/n): ")
+        user_confirm = self._prompt_y_n("Are you sure?")
         if user_confirm:
-            save_confirm = self._prompt_y_n("Would you like to save this? (y/n): ")
+            save_confirm = self._prompt_y_n("Would you like to save this?")
             self._controller.closeFile(remove_index, save_confirm)
             if save_confirm:
                 self._send_message("{}\n\t saved and closed".format(nominated_datafile))
@@ -394,7 +394,7 @@ class DataFileCLIView:
 
         column_names = self._controller.get_current_datafile_columns()
 
-        initial_confirm = self._prompt_y_n("Add a new row? (y/n): ")
+        initial_confirm = self._prompt_y_n("Add a new row?")
 
         if initial_confirm:
 
@@ -495,7 +495,7 @@ class DataFileCLIView:
         self._send_message("Row to remove:")
         self._send_message(row_to_remove)
 
-        confirm_removal = self._prompt_y_n("Confirm removal of row? (y/n): ")
+        confirm_removal = self._prompt_y_n("Confirm removal of row?")
         if confirm_removal:
             self._controller.remove_row_from_current_datafile(index_to_remove)
             self._send_message("Row removed", True)
@@ -537,7 +537,7 @@ class DataFileCLIView:
         self._send_message("Row to change:")
         self._send_message(row_to_change)
 
-        confirm_change_row = self._prompt_y_n("Confirm change of row? (y/n): ")
+        confirm_change_row = self._prompt_y_n("Confirm change of row?")
         if confirm_change_row:
             index_of_column_to_change = self._prompt_choice(
                 self._controller.get_current_datafile_columns(),
@@ -558,7 +558,7 @@ class DataFileCLIView:
             old_value = row_to_change.to_dict("list")[column_name][0]
 
             confirm_change_value = self._prompt_y_n(
-                'Confirm "{}" -> "{}"? (y/n): '.format(old_value, new_value)
+                'Confirm "{}" -> "{}"?'.format(old_value, new_value)
             )
 
             if confirm_change_value:
@@ -734,7 +734,7 @@ class DataFileCLIView:
         ]
 
         is_exact = self._prompt_y_n(
-            "Exact search? (otherwise substring search) (y/n): "
+            "Exact search? (otherwise substring search)"
         )
 
         self._current_query.append([entered_term, entered_column, is_exact])
@@ -777,7 +777,7 @@ class DataFileCLIView:
             return
 
         confirm_change_row = self._prompt_y_n(
-            "Confirm deletion of {} row{}? (y/n): ".format(
+            "Confirm deletion of {} row{}?".format(
                 total_rows, "" if total_rows == 1 else "s"
             )
         )

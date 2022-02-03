@@ -2,3 +2,6 @@
 
 # ALTakeHomeTest2022
 The Animal Logic Take Home Test for Mustafa Barodawala
+
+# Documentation
+Find documentation ![here](Sphinx-docs/_build/markdown/index.md)

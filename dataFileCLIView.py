@@ -434,16 +434,16 @@ class DataFileCLIView:
         self._remove_row(True)
 
         self._current_scene = "Search"
-    
+
     def _prompt_row(self, searching=False):
         """
         Prompts the user to select a row of the DataFile's DataFrame
-        
+
         :param searching: (default=False) Flag if using from Search scene
         :return: list [index of row, row of DataFrame]
         :rtype: list[int, Pandas DataFrame]
         """
-        
+
         index_of_interest = -1
 
         total_rows = len(self._controller.get_current_datafile_dataframe())
@@ -459,7 +459,9 @@ class DataFileCLIView:
             return
 
         index_value_selected = self._prompt_choice(
-            range(total_rows), choice_msg="Which row are you choosing?", show_choices=False
+            range(total_rows),
+            choice_msg="Which row are you choosing?",
+            show_choices=False,
         )
 
         if searching:
@@ -478,8 +480,8 @@ class DataFileCLIView:
             [index_of_interest]
         ]
 
-        row_of_interest = row_of_interest.set_index(pd.Index([index_of_interest +1]))
-        
+        row_of_interest = row_of_interest.set_index(pd.Index([index_of_interest + 1]))
+
         return [index_of_interest, row_of_interest]
 
     def _remove_row(self, searching=False):
@@ -489,7 +491,7 @@ class DataFileCLIView:
         :param searching: (default=False) Flag if removing row from Search scene
         :type searching: boolean
         """
-        
+
         index_to_remove, row_to_remove = self._prompt_row(searching)
 
         self._send_message("Row to remove:")
@@ -529,7 +531,7 @@ class DataFileCLIView:
         :param searching: (default=False) Flag if changing row in Search scene
         :type searching: boolean
         """
-        
+
         index_to_change, row_to_change = self._prompt_row(searching)
 
         row_to_change = row_to_change.set_index(pd.Index([index_to_change + 1]))

@@ -107,7 +107,7 @@ class DataFileCLIView:
         :type choice_msg: (Optional) string
         :type show_choices: boolean
         :type allow_exit: boolean
-        :return: index of choice from `choices`
+        :return: index of choice from `choices`, -1 if no choice
         :rtype: int
         """
         if len(choices) == 0:

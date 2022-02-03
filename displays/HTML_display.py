@@ -8,10 +8,11 @@ import webbrowser
 from os import mkdir, path
 import datetime
 
+
 def display(dataframe, output_stream=print):
     """
-    Open `dataframe` as a HTML Table in the current browser 
-    
+    Open `dataframe` as a HTML Table in the current browser
+
     :param dataframe: the Pandas DataFrame to display
     :param output_stream: Function to pass the string version of `dataframe`
     :type dataframe: Pandas DataFrame
@@ -22,9 +23,13 @@ def display(dataframe, output_stream=print):
     try:
         if not path.exists(output_dir):
             mkdir(output_dir)
-        filename = path.join(output_dir,
-                             "datafile_display_" + datetime.datetime.today().strftime("%Y_%m_%d_%H_%M_%S") + ".html")
-        
+        filename = path.join(
+            output_dir,
+            "datafile_display_"
+            + datetime.datetime.today().strftime("%Y_%m_%d_%H_%M_%S")
+            + ".html",
+        )
+
         try:
             dataframe.to_html(filename)
             output_stream("Opening {} in browser...".format(filename))

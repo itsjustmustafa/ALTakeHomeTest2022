@@ -26,4 +26,5 @@ Find documentation ![here](Sphinx-docs/_build/markdown/index.md)
   - Similar to above, took advantage of how Python treats modules as their own objects, and was therefore able to pass around modules containing methods for displaying DataFile
 
 This is how I diagrammed out the scenes:
+
 ![scene_diagram.jpg](https://raw.githubusercontent.com/itsjustmustafa/ALTakeHomeTest2022/main/scene_diagram.jpg)

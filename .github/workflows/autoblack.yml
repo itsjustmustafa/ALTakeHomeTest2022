@@ -6,7 +6,11 @@
 # https://github.com/cclauss/autoblack
 
 name: autoblack
-on: [pull_request]
+on:
+  push:
+    branches:  [ "*" ]
+  pull_request:
+    branches: [ "*" ]
 jobs:
   build:
     runs-on: ubuntu-latest

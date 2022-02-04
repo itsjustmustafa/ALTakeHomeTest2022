@@ -14,14 +14,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./Sphinx-docs
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.10"
       - name: Make markdown docs
         run: |
           cd Sphinx-docs
           make markdown
           cd ..
+        working-directory: ${{env.working-directory}}
+          

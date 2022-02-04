@@ -19,6 +19,7 @@ jobs:
     steps:
       - name: Make markdown docs
         run: |
+          ls
           cd Sphinx-docs
           make markdown
           cd ..

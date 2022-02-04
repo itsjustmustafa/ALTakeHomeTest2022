@@ -15,12 +15,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      working-directory: Sphinx-docs/
+      working-directory: ../Sphinx-docs/
     steps:
       - name: Make markdown docs
         run: |
-          ls
-          cd Sphinx-docs
           make markdown
           cd ..
         working-directory: ${{env.working-directory}}
